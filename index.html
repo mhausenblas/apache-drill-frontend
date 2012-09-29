@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Apache Drill</title> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link href="lib/bootstrap/css/bootstrap.css" rel="stylesheet">
+	<style type="text/css">
+		body {
+			padding-top: 60px;
+			padding-bottom: 40px;
+		}
+		
+		.sidebar-nav {
+			padding: 10px;
+		}
+		#project-list {
+			margin: 40px 0;
+		}
+		.project-entry {
+			margin: 10px 10px 20px 10px;
+			border-bottom: 1px solid #fafafa;
+		}
+		.apache-logo {
+			text-align: right;
+		}
+	</style>
+	<link href="lib/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+
+	<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+	<!--[if lt IE 9]>
+	  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+</head>
+<body>
+	<!-- The menu -->
+	<div class="navbar navbar-inverse navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container-fluid">
+				<a class="brand" href="#">Apache Drill</a>
+				<div class="nav-collapse collapse">
+					<ul class="nav">
+						<li class="active"><a href="#">Home</a></li>
+						<li><a href="#about">About</a></li>
+						<li><a href="https://git-wip-us.apache.org/repos/asf/incubator-drill.git" target="_blank">Source</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Configuration dialog box -->
+	<div class="modal hide" id="config-dialog" data-keybaord="true">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h3>Drill configuration</h3>
+		</div>
+		<div class="modal-body">
+			<p>Here will be the connection settings (IP + port of query server, etc.), but for now, we're using <a href="https://developers.google.com/bigquery/" target="_blank">BigQuery</a> as a backend, so nothing to configure, really.</p>
+		</div>
+		<div class="modal-footer">
+			<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+			<button class="btn btn-primary">Save changes</button>
+		</div>
+	</div>
+
+	<!-- The main content -->
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span10">
+				<div class="hero-unit">
+					<h1>Welcome to Apache Drill!</h1>
+					<p>To start using Drill, configure the backend and then create a project on the right hand side or, if you're new to Drill, take a guided tour using some example data first.</p>
+					<p><a class="btn btn-primary btn-large" id="tutorial">Tutorial &raquo;</a> <button type="button" class="btn btn-large" id="config">Configure &raquo;</button></p> 
+				</div>
+				<div class="alert alert-block">
+					<button type="button" class="close" data-dismiss="alert">×</button>
+					<h4>Note</h4>
+					<p>All the information about projects and data sources is stored locally, in your browser, using HTML5 <a href="http://diveintohtml5.info/storage.html" title="Local Storage - Dive Into HTML5">localStorage</a>, if you're unsure if your browser supports this, you might want to <a href="http://caniuse.com/#feat=namevalue-storage" title="When can I use... Support tables for HTML5, CSS3, etc">check first</a>.</p>
+				</div>
+				<div class="row-fluid">
+					<div class="span12">
+						<h2>Query</h2>
+						<textarea class="field span12" id="textarea" rows="6" placeholder="Enter your query here"></textarea>
+						<div class="pull-right"><a class="btn btn-large btn btn-success" href="#">Execute</a></div>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span12">
+						<h2>Results</h2>
+						<p>...</p>
+					</div>
+				</div>
+			</div>
+		<div class="span2">
+			<!-- Project create form -->
+			<form class="hide" id="project-create-form">
+				<legend>New Project</legend>
+				<label>Title</label>
+				<input type="text" placeholder="Project title" id="project-title">
+				<span class="help-block">Provide a title for your new project here.</span>
+				<div class="form-actions">
+					<button type="submit" class="btn btn-primary">Save changes</button>
+					<button type="button" class="btn" id="project-create-cancel">Cancel</button>
+				</div>
+			</form>
+			<!-- Project help dialog box -->
+			<div class="alert alert-info alert-block hide"	data-alert="alert" id="project-help-alert">
+				<button type="button" class="close" data-dismiss="alert">×</button>
+				<h4>Help on projects</h4>
+				<p>Projects are a collection of datasets, for example grouped thematically or by the original data publisher. A query is executed against all active data sources across all projects.</p>
+			</div>
+			<div class="well sidebar-nav">
+				<div class="btn-group">
+				  <a class="btn btn-primary" href="#"><i class="icon-th-large icon-white"></i> Project</a> 
+				  <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+				  <ul class="dropdown-menu">
+					<li><a href="#" onclick="return false" id="project-create"><i class="icon-plus"></i> Create</a></li>
+					<li class="divider"></li>
+					<li><a href="#" onclick="return false" id="project-help"><i class="i"></i> Help</a></li>
+					<!-- <li><a href="#"><i class="icon-wrench"></i> Configure</a></li> -->
+				  </ul>
+				</div>
+				<div id="project-list"></div>
+			</div>
+			
+		</div>
+	</div>
+		<hr>
+		<footer>
+			<div class="apache-logo"><img src="img/feather-small.gif" width="100" alt="Apacje feather" /></div>
+			<p>Copyright &copy;	 2012 <a href="http://www.apache.org/" title="Welcome to The Apache Software Foundation!">The Apache Software Foundation</a>, Licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0" title="">Apache License, Version 2.0</a>.</p>
+			<p>Apache and the Apache feather logo are trademarks of The Apache Software Foundation.</p>
+		</footer>
+	</div>
+
+	<script src="lib/jquery.js"></script>
+	<script src="lib/bootstrap/js/bootstrap.js"></script>
+	<script src="drill.js"></script>	
+</body>
+</html>
