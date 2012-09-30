@@ -62,12 +62,33 @@ $(function(){
 		}
 	});
 
-    $('#project-help').click(function(){
-        $('#project-help-alert').fadeIn('slow');
+	$('#project-help').click(function(){
+		$('#project-help-alert').fadeIn('slow');
 		return false;
-    });
+	});
+
+	$('#drill-query-execute').click(function(){
+		executeQuery();
+		return false;
+	});
 
 });
+
+
+// requires Drill Dummy server running on http://localhost:6996/
+function executeQuery(){
+	var drillquery = $('#drill-query').val();
+	if(drillquery){
+		$.get('http://localhost:6996/q/' + drillquery , function(data) {
+		  $('#drill-results').html('<code>' + JSON.stringify(data) + '</code>');
+		});
+	}
+	else {
+		alert("Need to provide a query value, try for example 'jane'");
+	}
+}
+
+
 
 // low-level storage API using localStorage http://caniuse.com/#feat=namevalue-storage
 
