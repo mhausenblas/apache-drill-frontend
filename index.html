@@ -53,17 +53,26 @@
 	
 	<!-- Configuration dialog box -->
 	<div class="modal hide" id="config-dialog" data-keybaord="true">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			<h3>Drill configuration</h3>
-		</div>
-		<div class="modal-body">
-			<p>Here will be the connection settings (IP + port of query server, etc.), but for now, we're using <a href="https://developers.google.com/bigquery/" target="_blank">BigQuery</a> as a backend, so nothing to configure, really.</p>
-		</div>
-		<div class="modal-footer">
-			<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-			<button class="btn btn-primary">Save changes</button>
-		</div>
+		<form id="config-form">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h3>Drill configuration</h3>
+			</div>
+			<div class="modal-body">
+					<legend>Dummy Drill back-end</legend>
+					<label>Address</label>
+					<input type="text" placeholder="http://..." id="config-drill-backend-url">
+					<span class="help-block">Provide the URL of the Dummy Drill back-end, here (incl. port).</span>
+					<legend>BigQuery</legend>
+					<span class="help-block">Alternatively, we're using <a href="https://developers.google.com/bigquery/" target="_blank">BigQuery</a> as a back-end - to be implemented, soon.</span>
+			
+			</div>
+			<div class="modal-footer">
+				<button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+				<button class="btn" id="config-drill-reset">Reset to defaults</button>
+				<button type="submit" class="btn btn-primary">Save changes</button>
+			</div>
+		</form>
 	</div>
 
 	<!-- The main content -->
@@ -83,7 +92,7 @@
 				<div class="row-fluid">
 					<div class="span12">
 						<h2>Query</h2>
-						<textarea class="field span12" id="drill-query" rows="6" placeholder="Enter your query here"></textarea>
+						<textarea class="field span12" id="drill-query" rows="6" placeholder="Enter your query here. For example, try 'jane' or 'Guinness' ..." autofocus="autofocus"></textarea>
 						<div class="pull-right"><a class="btn btn-large btn btn-success" href="#" onclick="return false" id="drill-query-execute">Execute</a></div>
 					</div>
 				</div>
@@ -102,12 +111,12 @@
 				<input type="text" placeholder="Project title" id="project-title">
 				<span class="help-block">Provide a title for your new project here.</span>
 				<div class="form-actions">
-					<button type="submit" class="btn btn-primary">Save changes</button>
 					<button type="button" class="btn" id="project-create-cancel">Cancel</button>
+					<button type="submit" class="btn btn-primary">Save changes</button>
 				</div>
 			</form>
 			<!-- Project help dialog box -->
-			<div class="alert alert-info alert-block hide"	data-alert="alert" id="project-help-alert">
+			<div class="alert alert-info alert-block hide" data-alert="alert" id="project-help-alert">
 				<button type="button" class="close" data-dismiss="alert">×</button>
 				<h4>Help on projects</h4>
 				<p>Projects are a collection of datasets, for example grouped thematically or by the original data publisher. A query is executed against all active data sources across all projects.</p>

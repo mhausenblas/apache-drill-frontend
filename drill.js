@@ -3,18 +3,38 @@ var projectnum = 0;
 
 // Drill frontend settings
 var MAX_PROJECTS = 100;
+var DRILL_BACKEND_URL = 'http://localhost:6996';
+var backendURL = DRILL_BACKEND_URL;
 
 $(function(){
-	listProjects();
+	initForms();
 	
-    $('#config-dialog').modal({
-        backdrop: true,
-        keyboard: true,
+	$('#config-dialog').modal({
+		backdrop: true,
+		keyboard: true,
 		show: false
-    });
-    $('#config').click(function(){
-        $('#config-dialog').modal('toggle');
-        return false;
+	});
+	$('#config').click(function(){
+		$('#config-dialog').modal('toggle');
+		return false;
+	});
+	$('#config-form').submit(function() {
+		var bURL = $('#config-drill-backend-url').val();
+		var dconfig = { backendURL: bURL };
+		
+		if (bURL) {
+			backendURL = bURL;
+			_store('config', dconfig);
+			return true;
+		}
+		return false;
+	});
+	$('#config-drill-reset').click(function(){
+		var dconfig = { backendURL: DRILL_BACKEND_URL };
+		backendURL = DRILL_BACKEND_URL;
+		$('#config-drill-backend-url').val(backendURL);
+		_store('config', dconfig);
+		return false;
     });
 
 	$('#tutorial').popover({
@@ -34,12 +54,10 @@ $(function(){
 		$('#project-create-form').fadeIn('slow');
 		return false;
     });
-
     $('#project-create-cancel').click(function(){
 		$('#project-create-form').hide();
 		return false;
     });
-
 	$('#project-create-form').submit(function() {
 		var ptitle = $('#project-title').val();
 		var project = { timestamp : new Date() , ptitle: ptitle };
@@ -52,7 +70,6 @@ $(function(){
 		}
 		return false;
 	});
-
 	$('.project-entry .icon-trash').live('click', function(event){
 		var response = confirm('Are you sure you want to delete this project?');
 		var key = $(this).parent().parent().parent().attr('id')  // using @id of the project entry, with current element: div/h3/a/i
@@ -74,13 +91,36 @@ $(function(){
 
 });
 
+// init all forms (config, project lsit, etc.)
+function initForms(){
+	var dconfig = _read('drill_config');
+	
+	if(dconfig){
+		backendURL = dconfig.backendURL;
+		$('#config-drill-backend-url').val(backendURL);
+	}
+	else {
+		$('#config-drill-backend-url').val(backendURL);
+	}
+	listProjects();
+}
 
-// requires Drill Dummy server running on http://localhost:6996/
+// executes the query against a Dummy Drill back-end
 function executeQuery(){
 	var drillquery = $('#drill-query').val();
 	if(drillquery){
-		$.get('http://localhost:6996/q/' + drillquery , function(data) {
-		  $('#drill-results').html('<code>' + JSON.stringify(data) + '</code>');
+		$.ajax({
+			type: "GET",
+			url: backendURL +'/q/' + drillquery,
+			dataType : "json",
+			success: function(data){
+				if(data) {
+					$('#drill-results').html('<pre>' + JSON.stringify(data) + '</pre>');
+				}
+			},
+			error:  function(msg){
+				$('#drill-results').html('<div class="alert"><button type="button" class="close" data-dismiss="alert">×</button><h4>Something went wrong. Might check your configuration and/or query?</h4><div style="margin: 20px"><pre>' + JSON.stringify(msg) + '</pre></div></div>');
+			} 
 		});
 	}
 	else {
@@ -113,15 +153,20 @@ function listProjects(){
 
 function _store(category, entry) {
 	var key = 'drill_';
-	if(category == 'project') {
-		projectnum += 1;
-		if (projectnum > MAX_PROJECTS) {
-			alert('Maximum number of projects reached');
-			return;
+	if(category == 'config') {
+		key += 'config';
+	}
+	else {
+		if(category == 'project') {
+			projectnum += 1;
+			if (projectnum > MAX_PROJECTS) {
+				alert('Maximum number of projects reached');
+				return;
+			}
+			key += 'project_' + projectnum;
 		}
-		key += 'project_' + projectnum;
-	} 
-	else return; // can only store known entry categories
+		else return; // can only store known entry categories
+	}
 	
 	drillstorage.setItem(key, JSON.stringify(entry));
 	return key;
