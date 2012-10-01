@@ -20,11 +20,19 @@
 			margin: 40px 0;
 		}
 		.project-entry {
-			margin: 10px 10px 20px 10px;
-			border-bottom: 1px solid #fafafa;
+			margin: 40px 15px 20px 15px;
+			padding: 5px;
 		}
 		.apache-logo {
 			text-align: right;
+			padding: 20px;
+		}
+		footer {
+			bottom: 5px;
+			left: 10px;
+			position: fixed;
+			z-index: -1;
+			width: 100%;
 		}
 	</style>
 	<link href="lib/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
@@ -56,7 +64,7 @@
 		<form id="config-form">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3>Drill configuration</h3>
+				<h3>Apache Drill front-end configuration</h3>
 			</div>
 			<div class="modal-body">
 					<legend>Dummy Drill back-end</legend>
@@ -84,7 +92,7 @@
 					<p>To start using Drill, configure the backend and then create a project on the right hand side or, if you're new to Drill, take a guided tour using some example data first.</p>
 					<p><a class="btn btn-primary btn-large" id="tutorial">Tutorial &raquo;</a> <button type="button" class="btn btn-large" id="config">Configure &raquo;</button></p> 
 				</div>
-				<div class="alert alert-block">
+				<div class="alert alert-block" id="storage-alert">
 					<button type="button" class="close" data-dismiss="alert">×</button>
 					<h4>Note</h4>
 					<p>All the information about projects and data sources is stored locally, in your browser, using HTML5 <a href="http://diveintohtml5.info/storage.html" title="Local Storage - Dive Into HTML5">localStorage</a>, if you're unsure if your browser supports this, you might want to <a href="http://caniuse.com/#feat=namevalue-storage" title="When can I use... Support tables for HTML5, CSS3, etc">check first</a>.</p>
@@ -122,16 +130,8 @@
 				<p>Projects are a collection of datasets, for example grouped thematically or by the original data publisher. A query is executed against all active data sources across all projects.</p>
 			</div>
 			<div class="well sidebar-nav">
-				<div class="btn-group">
-				  <a class="btn btn-primary" href="#"><i class="icon-th-large icon-white"></i> Project</a> 
-				  <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
-				  <ul class="dropdown-menu">
-					<li><a href="#" onclick="return false" id="project-create"><i class="icon-plus"></i> Create</a></li>
-					<li class="divider"></li>
-					<li><a href="#" onclick="return false" id="project-help"><i class="i"></i> Help</a></li>
-					<!-- <li><a href="#"><i class="icon-wrench"></i> Configure</a></li> -->
-				  </ul>
-				</div>
+				<button class="btn btn-large" type="button"id="project-help" id="project-create"><i class="i"></i>?</button>
+				<button class="pull-right btn btn-large btn-primary" type="button" id="project-create"><i class="icon-plus icon-white"></i> Create Project</button> 
 				<div id="project-list"></div>
 			</div>
 			
@@ -140,8 +140,9 @@
 		<hr>
 		<footer>
 			<div class="apache-logo"><img src="img/feather-small.gif" width="100" alt="Apacje feather" /></div>
-			<p>Copyright &copy;	 2012 <a href="http://www.apache.org/" title="Welcome to The Apache Software Foundation!">The Apache Software Foundation</a>, Licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0" title="">Apache License, Version 2.0</a>.</p>
-			<p>Apache and the Apache feather logo are trademarks of The Apache Software Foundation.</p>
+			<p>
+			Copyright &copy; 2012 <a href="http://www.apache.org/" title="Welcome to The Apache Software Foundation!">The Apache Software Foundation</a>, Licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0" title="">Apache License, Version 2.0</a> &mdash; 
+			Apache and the Apache feather logo are trademarks of The Apache Software Foundation.</p>
 		</footer>
 	</div>
 

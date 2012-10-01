@@ -78,11 +78,15 @@ $(function(){
 			listProjects();
 		}
 	});
-
 	$('#project-help').click(function(){
 		$('#project-help-alert').fadeIn('slow');
 		return false;
 	});
+	$('.add-ds').click(function(){
+		alert('Not yet implemented ...');
+	});
+	
+	
 
 	$('#drill-query-execute').click(function(){
 		executeQuery();
@@ -119,7 +123,7 @@ function executeQuery(){
 				}
 			},
 			error:  function(msg){
-				$('#drill-results').html('<div class="alert"><button type="button" class="close" data-dismiss="alert">×</button><h4>Something went wrong. Might check your configuration and/or query?</h4><div style="margin: 20px"><pre>' + JSON.stringify(msg) + '</pre></div></div>');
+				$('#drill-results').html('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">×</button><h4>Something went wrong. Might check your configuration and/or query?</h4><div style="margin: 20px"><pre>' + JSON.stringify(msg) + '</pre></div></div>');
 			} 
 		});
 	}
@@ -134,6 +138,7 @@ function executeQuery(){
 
 function listProjects(){
 	var i = 0;
+	var buf = '';
 	$('#project-list').html('');
 	
 	while(true){
@@ -143,7 +148,12 @@ function listProjects(){
 		if (i > MAX_PROJECTS) return;
 		
 		if(project) {
-			$('#project-list').append('<div class="project-entry" id="' + key + '"><h3>' + project.ptitle + ' <a class="btn btn-small" href="#"><i class="icon-trash"></i></a></h3><p>Created on: ' +  project.timestamp + '</p></div>');
+			buf = '';
+			buf = '<div class="project-entry" id="' + key + '"><h3>' + project.ptitle + ' <a class="pull-right btn btn-large" href="#"><i class="icon-trash"></i></a></h3>';
+			buf += ' <p>Created on: ' +  project.timestamp + '</p>';
+			buf += ' <button class="pull-right btn btn-primary add-ds" type="button"><i class="icon-plus icon-white"></i> Add Data Source</button>';
+			buf += '</div>';
+			$('#project-list').append(buf);
 			projectnum = i;
 		}
 		
