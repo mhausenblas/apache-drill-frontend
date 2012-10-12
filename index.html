@@ -25,14 +25,10 @@
 		}
 		.apache-logo {
 			text-align: right;
-			padding: 20px;
 		}
 		footer {
-			bottom: 5px;
-			left: 10px;
-			position: fixed;
-			z-index: -1;
-			width: 100%;
+			margin: 2em 0 0 0;
+			text-align: justify;
 		}
 	</style>
 	<link href="lib/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
@@ -47,17 +43,34 @@
 	<div class="navbar navbar-inverse navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container-fluid">
-				<a class="brand" href="#">Apache Drill</a>
+				<a class="brand" href="http://incubator.apache.org/drill/" target="_blank">Apache Drill</a>
 				<div class="nav-collapse collapse">
 					<ul class="nav">
 						<li class="active"><a href="#">Home</a></li>
-						<li><a href="#about">About</a></li>
+						<li><a href="#" onclick="return false" id="about">About</a></li>
 						<li><a href="https://git-wip-us.apache.org/repos/asf/incubator-drill.git" target="_blank">Source</a></li>
 					</ul>
 				</div>
 			</div>
 		</div>
 	</div>
+	
+	<!-- About dialog box -->
+	
+	<div class="modal hide" id="about-dialog" data-keybaord="true">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h3>About Apache Drill front-end</h3>
+		</div>
+		<div class="modal-body">
+			<p>This is the Apache Drill front-end. Note that all information about projects and data sources is stored locally, in your browser, using HTML5 <a href="http://diveintohtml5.info/storage.html" title="Local Storage - Dive Into HTML5">localStorage</a>, if you're unsure if your browser supports this, you might want to <a href="http://caniuse.com/#feat=namevalue-storage" title="When can I use... Support tables for HTML5, CSS3, etc">check first</a>.</p>
+		</div>
+		<div class="modal-footer">
+			<button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+		</div>
+	</div>
+	
+	
 	
 	<!-- Configuration dialog box -->
 	<div class="modal hide" id="config-dialog" data-keybaord="true">
@@ -90,12 +103,7 @@
 				<div class="hero-unit">
 					<h1>Welcome to Apache Drill!</h1>
 					<p>To start using Drill, configure the backend and then create a project on the right hand side or, if you're new to Drill, take a guided tour using some example data first.</p>
-					<p><a class="btn btn-primary btn-large" id="tutorial">Tutorial &raquo;</a> <button type="button" class="btn btn-large" id="config">Configure &raquo;</button></p> 
-				</div>
-				<div class="alert alert-block" id="storage-alert">
-					<button type="button" class="close" data-dismiss="alert">×</button>
-					<h4>Note</h4>
-					<p>All the information about projects and data sources is stored locally, in your browser, using HTML5 <a href="http://diveintohtml5.info/storage.html" title="Local Storage - Dive Into HTML5">localStorage</a>, if you're unsure if your browser supports this, you might want to <a href="http://caniuse.com/#feat=namevalue-storage" title="When can I use... Support tables for HTML5, CSS3, etc">check first</a>.</p>
+					<p><a class="btn btn-primary btn-large" id="tutorial">Tutorial &raquo;</a> <button type="button" class="btn btn-large" id="config">Configure &raquo;</button></p>
 				</div>
 				<div class="row-fluid">
 					<div class="span12">

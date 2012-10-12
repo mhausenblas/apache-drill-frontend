@@ -9,11 +9,6 @@ var backendURL = DRILL_BACKEND_URL;
 $(function(){
 	initForms();
 	
-	$('#config-dialog').modal({
-		backdrop: true,
-		keyboard: true,
-		show: false
-	});
 	$('#config').click(function(){
 		$('#config-dialog').modal('toggle');
 		return false;
@@ -35,7 +30,13 @@ $(function(){
 		$('#config-drill-backend-url').val(backendURL);
 		_store('config', dconfig);
 		return false;
-    });
+	});
+	
+	$('#about').click(function(){
+		$('#about-dialog').modal('toggle');
+		return false;
+	});
+	
 
 	$('#tutorial').popover({
 		title : 'Apache Drill Tutorial',
@@ -95,7 +96,7 @@ $(function(){
 
 });
 
-// init all forms (config, project lsit, etc.)
+// init all forms (about, config, project lsit, etc.)
 function initForms(){
 	var dconfig = _read('drill_config');
 	
@@ -107,6 +108,19 @@ function initForms(){
 		$('#config-drill-backend-url').val(backendURL);
 	}
 	listProjects();
+	
+	$('#config-dialog').modal({
+		backdrop: true,
+		keyboard: true,
+		show: false
+	});
+	
+	$('#about-dialog').modal({
+		backdrop: true,
+		keyboard: true,
+		show: false
+	});
+	
 }
 
 // executes the query against a Dummy Drill back-end
