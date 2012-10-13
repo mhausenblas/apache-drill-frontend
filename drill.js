@@ -133,7 +133,11 @@ function executeQuery(){
 			dataType : "json",
 			success: function(data){
 				if(data) {
-					$('#drill-results').html('<pre>' + JSON.stringify(data) + '</pre>');
+					var b = '<p class="text-info lead">Number of results: <strong>' + data.length + '</strong></p>';
+					for(i in data) {
+						b += '<div><p class="text-info">' + i + '</p><pre>' + JSON.stringify(data[i]) + '</pre></div>';
+					}
+					$('#drill-results').html(b);
 				}
 			},
 			error:  function(msg){
@@ -147,8 +151,10 @@ function executeQuery(){
 }
 
 
-
-// low-level storage API using localStorage http://caniuse.com/#feat=namevalue-storage
+/////////////////////////////////////////////////////
+// low-level storage API using localStorage 
+// check http://caniuse.com/#feat=namevalue-storage
+// if your browser supports it
 
 function listProjects(){
 	var i = 0;
@@ -163,9 +169,9 @@ function listProjects(){
 		
 		if(project) {
 			buf = '';
-			buf = '<div class="project-entry" id="' + key + '"><h3>' + project.ptitle + ' <a class="pull-right btn btn-large" href="#"><i class="icon-trash"></i></a></h3>';
-			buf += ' <p>Created on: ' +  project.timestamp + '</p>';
-			buf += ' <button class="pull-right btn btn-primary add-ds" type="button"><i class="icon-plus icon-white"></i> Add Data Source</button>';
+			buf = '<div class="project-entry" id="' + key + '"><h4>' + project.ptitle + ' <a class="pull-right btn btn-small" href="#"><i class="icon-trash"></i></a></h4>';
+			buf += ' <p><small>Created on: ' +  project.timestamp + '</small></p>';
+			buf += ' <div style="margin: 1em 0 4em 0;"><button class="pull-right btn btn-small btn-primary add-ds" type="button"><i class="icon-plus icon-white"></i> Add Data Source</button></div>';
 			buf += '</div>';
 			$('#project-list').append(buf);
 			projectnum = i;

@@ -78,6 +78,4 @@ if __name__ == '__main__':
 		server.serve_forever()
 	except Exception, e:
 		logging.error(e)
-		print 'Usage:\n $python dummy_drill.py VALUE'
-		print 'Example:\n $python dummy_drill.py Jane'
 		sys.exit(2)	
