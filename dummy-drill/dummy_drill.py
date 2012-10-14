@@ -11,9 +11,10 @@ Copyright (c) 2012 The Apache Software Foundation, Licensed under the Apache Lic
 import sys, os, logging, datetime, random, json
 from BaseHTTPServer import BaseHTTPRequestHandler
 from pyes import *
+from pyes.exceptions import *
 
 # configuration
-DEBUG = False
+DEBUG = True
 DS_DIR = 'ds'
 ES_INTERFACE = '127.0.0.1:9200'
 DRILL_INDEX = 'apache_drill'
@@ -34,7 +35,7 @@ class ApacheDrillDummyServer(BaseHTTPRequestHandler):
 		# API calls
 		if self.path.startswith('/q/'): # pattern: /q/INDEX/QUERY
 			logging.debug("Processing %s" %(self.path))
-			self.serve_query(self.path.split('/')[0], self.path.split('/')[-1])
+			self.serve_query(self.path.split('/')[-2], self.path.split('/')[-1])
 		else:
 			self.send_error(404,'File Not Found: %s' % self.path)
 		return
@@ -51,13 +52,16 @@ class ApacheDrillDummyServer(BaseHTTPRequestHandler):
 
 	# serves remote content via forwarding the request
 	def serve_query(self, lucindex, q):
-		logging.debug('Quering ES on index %s with query %s' %(lucindex, q))
-		self.send_response(200)
-		self.send_header('Content-type', 'application/json')
-		self.send_header('Access-Control-Allow-Origin', '*') # enable CORS - http://enable-cors.org/#how
-		self.end_headers()
-		results = self.query(lucindex, q)
-		self.wfile.write(json.JSONEncoder().encode(results))
+		logging.debug('Querying ES on index %s with query %s' %(lucindex, q))
+		try:
+			results = self.query(lucindex, q)
+			self.send_response(200)
+			self.send_header('Content-type', 'application/json')
+			self.send_header('Access-Control-Allow-Origin', '*') # enable CORS - http://enable-cors.org/#how
+			self.end_headers()
+			self.wfile.write(json.JSONEncoder().encode(results))
+		except IndexMissingException:
+			self.send_error(404,'The data source %s does not exist.' % lucindex)
 
 	def query(self, lucindex, query_str):
 		"""Executes a query against the existing Drill index in elasticsearch."""
