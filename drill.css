@@ -2,6 +2,14 @@ body {
 	padding-top: 60px;
 	padding-bottom: 40px;
 }
+.hero-unit {
+	width: 60%;
+	padding: 50px;
+	text-align: justify;
+}
+.hero-unit h1 {
+	margin: 0 0 20px 0;
+}
 legend {
 	margin: 20px 0 10px 0;
 }

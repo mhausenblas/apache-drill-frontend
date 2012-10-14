@@ -190,6 +190,7 @@ function executeQuery(){
 	
 	if(drillquery){
 		if(ds){
+			$('#drill-results-meta').html('');
 			$('#drill-results').html('');
 			$.ajax({
 				type: "GET",
