@@ -152,6 +152,7 @@ $(function(){
 function initForms(){
 	var dconfig = _read('drill_config');
 	
+	//TODO: store last selected target data source
 	if(dconfig){
 		backendURL = dconfig.backendURL;
 		$('#config-drill-backend-url').val(backendURL);
@@ -226,7 +227,6 @@ function listProjects(){
 	
 	$('#project-list').html('');
 	
-	
 	while(true){
 		var pid = 'drill_project_' + i;
 		var project = _read(pid);
@@ -257,7 +257,7 @@ function listProjects(){
 					
 					if(ds){
 						if(seldsid && (dsid == seldsid)) { // highligt selected data source
-							buf += '<div class="target datasource-entry btn-primary"><i class="icon-file icon-white"></i> <span class="dsid" id="' + dsid +'">' + ds.dsid +'</span></div>';
+							buf += '<div class="target datasource-entry btn-success"><i class="icon-file icon-white"></i> <span class="dsid" id="' + dsid +'">' + ds.dsid +'</span></div>';
 							console.log('The target data source for the query is: ' + seldsid);
 						}
 						else {
