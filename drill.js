@@ -10,7 +10,7 @@ var backendURL = DRILL_BACKEND_URL;
 $(function(){
 	initForms();
 	
-	$('#config').click(function(){
+	$('#config, #menu-config').click(function(){
 		$('#config-dialog').modal('toggle');
 		return false;
 	});
@@ -33,32 +33,21 @@ $(function(){
 		return false;
 	});
 	
-	$('#about').click(function(){
+	$('#menu-about').click(function(){
 		$('#about-dialog').modal('toggle');
 		return false;
 	});
 
-	$('#tutorial').popover({
-		title : 'Apache Drill Tutorial',
-		content : 'We are working on a tutorial ...', 
-		placement : 'bottom'
-	});
-	
-	$('#help-dialog').modal({
-        backdrop: false,
-        keyboard: true,
-		show: false
-    });
 
-    $('#project-create').click(function(){
+	$('#project-create').click(function(){
 		$('#project-title').val('');
 		$('#project-create-form').fadeIn('slow');
 		return false;
-    });
-    $('#project-create-cancel').click(function(){
+	});
+	$('#project-create-cancel').click(function(){
 		$('#project-create-form').hide();
 		return false;
-    });
+	});
 	$('#project-create-form').submit(function() {
 		var ptitle = $('#project-title').val();
 		var project = { timestamp : new Date() , ptitle: ptitle };
@@ -162,6 +151,12 @@ function initForms(){
 	}
 	listProjects();
 	
+	$('#tutorial').popover({
+		title : 'Apache Drill Tutorial',
+		content : 'We are working on a tutorial ...', 
+		placement : 'bottom'
+	});
+
 	$('#config-dialog').modal({
 		backdrop: true,
 		keyboard: true,
@@ -174,6 +169,11 @@ function initForms(){
 		show: false
 	});
 	
+	$('#help-dialog').modal({
+		backdrop: false,
+		keyboard: true,
+		show: false
+	});
 }
 
 // executes the query against a Dummy Drill back-end
