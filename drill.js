@@ -59,12 +59,12 @@ $(function(){
 		}
 		return false;
 	});
-	// $('.project-entry .project-main').live('click', function(event){ // deal with project selection	
-	// 	var key = $(this).parent().attr('id'); // using @id of the selected project entry, with current element: div/div
-	// 	$('#current-project').html(key); // ... remember it globaly ...
-	// 	listProjects(); // ... and highlight in project list as the active one
-	// 	return false;
-	// });
+	$('.project-entry .project-main').live('click', function(event){ // deal with project selection	
+		var key = $(this).parent().attr('id'); // using @id of the selected project entry, with current element: div/div
+		$('#current-project').html(key); // ... remember it globaly ...
+		listProjects(); // ... and highlight in project list as the active one
+		return false;
+	});
 	$('.project-entry .icon-trash').live('click', function(event){ // deal with project deletion
 		var response = confirm('Are you sure you want to delete this project and all data sources within it? Note that this action can not be undone ...');
 		var pid = $(this).parent().parent().parent().attr('id');  // using @id of the project entry, with current element: div/div/a/i
