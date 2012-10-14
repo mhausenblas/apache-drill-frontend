@@ -7,42 +7,8 @@
 	<meta name="description" content="">
 	<meta name="author" content="">
 	<link href="lib/bootstrap/css/bootstrap.css" rel="stylesheet">
-	<style type="text/css">
-		body {
-			padding-top: 60px;
-			padding-bottom: 40px;
-		}
-		legend {
-			margin: 20px 0 10px 0;
-		}
-		label {
-			font-weight: bold;
-		}
-		.sidebar-nav {
-			padding: 10px;
-		}
-		#project-list {
-			margin: 40px 0;
-		}
-		.project-entry {
-			border-top: 1px solid #cacaca;
-			margin: 40px 0px 20px 0px;
-		}
-		.apache-logo {
-			text-align: right;
-		}
-		pre {
-			font-size: 80%;
-			margin: 0 0 25px 0;
-		}
-		footer {
-			margin: 2em 0 0 0;
-			text-align: justify;
-		}
-	</style>
 	<link href="lib/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
-
-	<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+	<link href="drill.css" rel="stylesheet">
 	<!--[if lt IE 9]>
 	  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
@@ -128,11 +94,14 @@
 				<div class="row-fluid">
 					<div class="span12">
 						<h2>Results</h2>
+						<div id="drill-results-meta"></div>
 						<div id="drill-results"></div>
 					</div>
 				</div>
 			</div>
 		<div class="span3">
+			<div id="current-project" class="hide">NONE</div>
+			<div id="current-ds" class="hide">NONE</div>
 			<!-- Project create form -->
 			<form class="hide" id="project-create-form">
 				<fieldset>
@@ -152,12 +121,24 @@
 				<h4>Help on projects</h4>
 				<p>Projects are a collection of datasets, for example grouped thematically or by the original data publisher. A query is executed against all active data sources across all projects.</p>
 			</div>
+			<!-- Data source add form -->
+			<form class="hide" id="datasource-add-form">
+				<fieldset>
+					<legend>Data Source</legend>
+					<label>Identifier:</label>
+					<input type="text" placeholder="Data source identifier" id="datasource-id">
+					<span class="help-block">Provide an unique identifier for the data source here (for now, this is the name of the Lucene index).</span>
+				</fieldset>
+				<div class="form-actions">
+					<button type="button" class="btn" id="datasource-add-cancel">Cancel</button>
+					<button type="submit" class="btn btn-primary">Save changes</button>
+				</div>
+			</form>
 			<div class="well sidebar-nav">
 				<button class="btn btn-small" type="button" id="project-help"><i class="i"></i>?</button>
-				<button class="pull-right btn btn-primary" type="button" id="project-create"><i class="icon-plus icon-white"></i> Create Project</button> 
+				<button class="pull-right btn btn-primary" type="button" id="project-create" title="Create a new project ..."><i class="icon-plus icon-white"></i> Create Project</button> 
 				<div id="project-list"></div>
 			</div>
-			
 		</div>
 	</div>
 		<hr>
@@ -170,8 +151,8 @@
 	</div>
 
 	<script src="lib/jquery.js"></script>
+	<script src="lib/jquery.renderjson.js"></script>
 	<script src="lib/bootstrap/js/bootstrap.js"></script>
-	<script src="lib/json.js"></script>
-	<script src="drill.js"></script>	
+	<script src="drill.js"></script>
 </body>
 </html>

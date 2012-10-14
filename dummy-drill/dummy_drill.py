@@ -32,8 +32,9 @@ class ApacheDrillDummyServer(BaseHTTPRequestHandler):
 
 	def do_GET(self):
 		# API calls
-		if self.path.startswith('/q/'):
-			self.serve_query(self.path.split('/')[-1])
+		if self.path.startswith('/q/'): # pattern: /q/INDEX/QUERY
+			logging.debug("Processing %s" %(self.path))
+			self.serve_query(self.path.split('/')[0], self.path.split('/')[-1])
 		else:
 			self.send_error(404,'File Not Found: %s' % self.path)
 		return
@@ -49,22 +50,22 @@ class ApacheDrillDummyServer(BaseHTTPRequestHandler):
 			return
 
 	# serves remote content via forwarding the request
-	def serve_query(self, q):
-		logging.debug('Quering ES with %s' %q)
+	def serve_query(self, lucindex, q):
+		logging.debug('Quering ES on index %s with query %s' %(lucindex, q))
 		self.send_response(200)
 		self.send_header('Content-type', 'application/json')
 		self.send_header('Access-Control-Allow-Origin', '*') # enable CORS - http://enable-cors.org/#how
 		self.end_headers()
-		results = self.query(q)
+		results = self.query(lucindex, q)
 		self.wfile.write(json.JSONEncoder().encode(results))
 
-	def query(self, query_str):
+	def query(self, lucindex, query_str):
 		"""Executes a query against the existing Drill index in elasticsearch."""
 		result_list = []
 		connection = ES(ES_INTERFACE)
 		connection.refresh()
 		q = Search(StringQuery(query_str))
-		results = connection.search(q, indices=[DRILL_INDEX])
+		results = connection.search(q, indices=[lucindex])
 		for r in results:
 			result_list.append(r)
 		return result_list
