@@ -129,12 +129,18 @@ $(function(){
 		return false;
 	});
 	
-
+	// execute a query - either via button click or by hitting ENTER in the text area
 	$('#drill-query-execute').click(function(){
 		executeQuery();
 		return false;
 	});
-
+	$('#drill-query').keypress(function(e) {
+		if (e.keyCode == 13 && e.shiftKey) {
+			e.preventDefault();
+			executeQuery();
+			return false;
+		}
+	});
 });
 
 // init all forms (about, config, project lsit, etc.)
@@ -182,32 +188,36 @@ function executeQuery(){
 	var seldsid = $('#current-ds').text();
 	var ds = _read(seldsid);
 	
-	$('#drill-results').html('');
-	
-	if(ds && drillquery){
-		$.ajax({
-			type: "GET",
-			url: backendURL +'/q/' + ds.dsid + '/' + drillquery,
-			dataType : "json",
-			success: function(data){
-				if(data) {
-					// var b = '<p class="text-info lead">Number of results: <strong>' + data.length + '</strong></p>';
-					// for(i in data) {
-					// 	b += '<div><p class="text-info">' + i + '</p><pre>' + JSON.stringify(data[i]) + '</pre></div>';
-					// }
-					// $('#drill-results').html(b);
-					$('#drill-results-meta').html('<p class="text-info lead">Number of results: <strong>' + data.length + '</strong></p>');
-					$('#drill-results').renderJSON(data);
-				}
-			},
-			error:  function(msg){
-				$('#drill-results-meta').html('');
-				$('#drill-results').html('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">×</button><h4>Something went wrong. Might check your configuration and/or query?</h4><div style="margin: 20px"><pre>' + JSON.stringify(msg) + '</pre></div></div>');
-			} 
-		});
+	if(drillquery){
+		if(ds){
+			$('#drill-results').html('');
+			$.ajax({
+				type: "GET",
+				url: backendURL +'/q/' + ds.dsid + '/' + drillquery,
+				dataType : "json",
+				success: function(data){
+					if(data) {
+						// var b = '<p class="text-info lead">Number of results: <strong>' + data.length + '</strong></p>';
+						// for(i in data) {
+						// 	b += '<div><p class="text-info">' + i + '</p><pre>' + JSON.stringify(data[i]) + '</pre></div>';
+						// }
+						// $('#drill-results').html(b);
+						$('#drill-results-meta').html('<p class="text-info lead">Number of results: <strong>' + data.length + '</strong></p>');
+						$('#drill-results').renderJSON(data);
+					}
+				},
+				error:  function(msg){
+					$('#drill-results-meta').html('');
+					$('#drill-results').html('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">×</button><h4>Something went wrong. Might check your configuration and/or query?</h4><div style="margin: 20px"><pre>' + JSON.stringify(msg) + '</pre></div></div>');
+				} 
+			});
+		}
+		else {
+			alert("Can't execute the query: please select a data source to execute the query against.");
+		}
 	}
 	else {
-		alert("Can't execute the query. Check if you've selected a data source to the right and if you've provided a query value, try for example 'name:jane'");
+		alert("Can't execute the query: please provided a query value, try for example 'name:jane' ...");
 	}
 }
 

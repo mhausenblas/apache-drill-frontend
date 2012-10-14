@@ -36,10 +36,11 @@
 	<div class="modal hide" id="about-dialog" data-keybaord="true">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			<h3>About front-end</h3>
+			<h3>About Apache Drill</h3>
 		</div>
 		<div class="modal-body">
-			<p>This is the Apache Drill front-end. Note that all information about projects and data sources is stored locally, in your browser, using HTML5 <a href="http://diveintohtml5.info/storage.html" title="Local Storage - Dive Into HTML5">localStorage</a>, if you're unsure if your browser supports this, you might want to <a href="http://caniuse.com/#feat=namevalue-storage" title="When can I use... Support tables for HTML5, CSS3, etc">check first</a>.</p>
+			<p>This is the <a href="http://incubator.apache.org/drill/" target="_blank">Apache Drill</a> front-end, a Web application that acts as a user interface to issue queries against a back-end. This software is licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0" title="">Apache License, Version 2.0</a>. If you have any questions, ping <a href="http://mhausenblas.info/" target="_blank">Michael Hausenblas</a>.</p>
+			<p class="muted">Note that all information about projects and data sources is stored locally (in your browser) using HTML5 <a href="http://diveintohtml5.info/storage.html" title="Local Storage - Dive Into HTML5">localStorage</a>. So, if you're unsure if your browser supports this, you might want to <a href="http://caniuse.com/#feat=namevalue-storage" title="When can I use... Support tables for HTML5, CSS3, etc">check it</a>  first.</p>
 		</div>
 		<div class="modal-footer">
 			<button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
@@ -52,18 +53,18 @@
 		<form id="config-form">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3>Apache Drill front-end configuration</h3>
+				<h3>Apache Drill configuration</h3>
 			</div>
 			<div class="modal-body">
 				<fieldset>
 					<legend>Dummy Drill back-end</legend>
 					<label>Address:</label>
 					<input type="text" placeholder="http://..." id="config-drill-backend-url">
-					<span class="help-block">Provide the URL of the Dummy Drill back-end, here (incl. port).</span>
+					<span class="help-block">Provide the URL of the Dummy Drill back-end, here.</span>
 				</fieldset>
 				<fieldset>
 					<legend>BigQuery</legend>
-					<span class="help-block">Alternatively, we're using <a href="https://developers.google.com/bigquery/" target="_blank">BigQuery</a> as a back-end - to be implemented, soon.</span>
+					<span class="help-block">Alternatively, we're using <a href="https://developers.google.com/bigquery/" target="_blank">BigQuery</a> as a back-end. This will be implemented, soon.</span>
 				</fieldset>
 			</div>
 			<div class="modal-footer">
@@ -89,6 +90,7 @@
 					<div class="span12">
 						<h2>Query</h2>
 						<textarea class="field span12" id="drill-query" rows="6" placeholder="Enter your query following Lucene query syntax, here. For example, try 'name:jane', or 'created:[2012-10-13T17:29:48Z TO 2012-10-13:17:29:48Z]', or simply 'Guinness' ..." autofocus="autofocus"></textarea>
+						<span class="help-block">Note: you can also execute the query by hitting ENTER while having the SHIFT key pressed.</span>
 						<div class="pull-right"><a class="btn btn-large btn btn-success" href="#" onclick="return false" id="drill-query-execute">Execute</a></div>
 					</div>
 				</div>
@@ -142,13 +144,12 @@
 			</div>
 		</div>
 	</div>
-		<hr>
-		<footer>
-			<div class="apache-logo"><img src="img/feather-small.gif" width="100" alt="Apache feather" /></div>
-			<p>
-			Copyright &copy; 2012 <a href="http://www.apache.org/" title="Welcome to The Apache Software Foundation!">The Apache Software Foundation</a>, Licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0" title="">Apache License, Version 2.0</a> &mdash; 
-			Apache and the Apache feather logo are trademarks of The Apache Software Foundation.</p>
-		</footer>
+	<footer>
+		<div class="apache-logo"><img src="img/feather-small.gif" width="100" alt="Apache feather" /></div>
+		<p class="muted">
+		Copyright &copy; 2012, <a href="http://www.apache.org/" title="Welcome to The Apache Software Foundation!">The Apache Software Foundation</a>. Licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0" title="">Apache License, Version 2.0</a> &mdash; 
+		Apache and the Apache feather logo are trademarks of The Apache Software Foundation.</p>
+	</footer>
 	</div>
 
 	<script src="lib/jquery.js"></script>
