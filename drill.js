@@ -304,10 +304,10 @@ function listProjects(){
 			buf += '<div style="text-align: right"><button class="btn btn-small btn-primary add-ds" type="button" title="Add a new data source to this project ..."><i class="icon-plus icon-white"></i> Add Data Source</button> ';
 			buf += '<a class="btn btn-small" href="#" title="Edit project ..."><i class="icon-edit"></i></a> ';
 			buf += '<a class="btn btn-small" href="#" title="Delete project ..."><i class="icon-trash"></i></a></div>';
-			buf += '<div class="project-main"><h4 class="editable">' + project.ptitle + '</h4>';
+			buf += '<div class="project-main"><h4>' + project.ptitle + '</h4>';
 			buf += '<p class="project-meta muted">Last update: ' +  formatDateHuman(project.timestamp) + '</p>';
 			if(selpid && (pid == selpid)) { // show data sources of selected project
-				buf += '<div><h5>Data Sources:</h5>';
+				buf += '<div class="datasource-entry-container"><h5>Data sources:</h5>';
 				while(true){
 					var dsid = 'drill_ds_drill_project_' + i + '_' + j;
 					var ds = _read(dsid);
@@ -329,7 +329,7 @@ function listProjects(){
 				else buf += '</div>';
 			}
 			else {
-				buf += '<p class="project-meta muted">Data Sources: ' +  _find_latest_ds_in(pid) + '</p>';
+				buf += '<p class="project-meta muted">Data sources: ' +  _find_latest_ds_in(pid) + '</p>';
 			}
 			buf += '</div></div>';
 			$('#project-list').append(buf);
@@ -347,8 +347,8 @@ function formatDateHuman(iso8601datetime) {
 	var time = iso8601datetime.split('T')[1]; // 2012-10-14T12:48:28.478Z -> 12:48:28.478Z
 	var hms = time.split('.')[0]; // 12:48:28
 	
-	if(date == today) return 'Today at ' + hms;
-	else return date + ' at ' + hms;
+	if(date == today) return 'Today at ' + hms + ' UTC';
+	else return date + ' at ' + hms + ' UTC';
 }
 
 // creates/stores an entry under the category; if key is provided, entry is updated
