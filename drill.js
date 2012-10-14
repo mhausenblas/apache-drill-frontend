@@ -179,7 +179,8 @@ function initForms() {
 	// UI setup:
 	$('#tutorial').popover({
 		title : 'Apache Drill Tutorial',
-		content : 'We are working on a tutorial ...', 
+		html: true, 
+		content : '<p><small>A screen cast about how to use the front-end will be available on 15 Oct 2012.</small></p><p><small>For now, configure the back-end with <code>http://srvgal85.deri.ie/apache-drill</code> and create a project that contains a data source with the identifier <code>apache_drill</code>.</small></p>', 
 		placement : 'bottom'
 	});
 
